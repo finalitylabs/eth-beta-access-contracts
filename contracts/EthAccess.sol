@@ -5,14 +5,16 @@ pragma solidity ^0.4.23;
 /// @author Nathan Ginnever
 
 import {HumanStandardToken} from "./lib/token/HumanStandardToken.sol";
+import {Ownable} from "./lib/ownership/Ownable.sol";
+import {CKProxy} from "./CKProxy.sol";
 
-contract EthAccess {
-
-    string public constant NAME = "Ledger Channel";
-    string public constant VERSION = "0.0.1";
+contract EthAccess is Ownable {
 
     // how long the sale is open for
-    uint256 public betaSaleTime = 0 minutes;
+    uint256 public betaSaleTime = 0;
+    uint256 public numParticipants = 0;
+
+    CKProxy public ck;
 
     struct Participant {
         address party;
@@ -21,11 +23,20 @@ contract EthAccess {
 
     mapping(address => Participant) public participants;
 
+    constructor(uint256 betaSaleLength, address _ckProxy) public {
+      betaSaleTime = betaSaleLength;
+      ck = CKProxy(_ckProxy);
+    }
+
     function purchaseQRT() public payable {
 
     }
 
-    function portalCryptoKitties(bytes32 _lcID) public {
+    function portalCryptoKitties() public {
+
+    }
+
+    function withdraw() onlyOwner {
 
     }
 }
