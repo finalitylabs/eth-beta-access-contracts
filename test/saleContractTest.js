@@ -2,8 +2,7 @@
 
 import MerkleTree from './helpers/MerkleTree'
 const Utils = require('./helpers/utils')
-const ethAccess = artifacts.require('./EthAccess.sol')
-const CKProxy = artifacts.require('./CKProxy.sol')
+const ethAccess = artifacts.require('./ETHAccess.sol')
 
 const Web3latest = require('web3')
 const web3latest = new Web3latest(new Web3latest.providers.HttpProvider("http://localhost:7545")) //ganache port
@@ -24,7 +23,7 @@ contract('E.T.H. sale contract tests', function(accounts) {
     partyB = accounts[1]
     partyI = accounts[2]
 
-    ea = await ethAccess.new(betaEndTime, ckAddress)
+    ea = await ethAccess.new(betaEndTime, ckAddress, 'E.T.H. Quarter', 'QRTETH')
   })
 
   it("set owner of token to sale contract", async () => {
