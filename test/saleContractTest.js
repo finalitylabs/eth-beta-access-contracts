@@ -10,7 +10,8 @@ const web3latest = new Web3latest(new Web3latest.providers.HttpProvider("http://
 
 
 let ea
-let ck
+let ckAddress = '0x0'
+let betaEndTime = '1'
 
 let partyA
 let partyB
@@ -23,11 +24,10 @@ contract('E.T.H. sale contract tests', function(accounts) {
     partyB = accounts[1]
     partyI = accounts[2]
 
-    ck = await CKProxy.new('0x0')
-    ea = await ethAccess.new('1', ck.address)
+    ea = await ethAccess.new(betaEndTime, ckAddress)
   })
 
-  it("test", async () => {
+  it("set owner of token to sale contract", async () => {
 
   })
 })

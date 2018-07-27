@@ -4,39 +4,54 @@ pragma solidity ^0.4.23;
 /// @title E.T.H. (Extreme Time Heroes) Access Contract for beta and main sale
 /// @author Nathan Ginnever
 
-import {HumanStandardToken} from "./lib/token/HumanStandardToken.sol";
-import {Ownable} from "./lib/ownership/Ownable.sol";
-import {CKProxy} from "./CKProxy.sol";
+//aimport {HumanStandardToken} from "./lib/token/HumanStandardToken.sol";
+import "./lib/ownership/Ownable.sol";
+import "./lib/token/CKInterface.sol";
 
-contract EthAccess is Ownable {
+contract ETHAccess is Ownable {
 
-    // how long the sale is open for
-    uint256 public betaSaleTime = 0;
-    uint256 public numParticipants = 0;
+  // how long the sale is open for
+  uint256 public betaSaleTime = 0;
+  uint256 public numParticipants = 0;
+  uint256 public QRTprice;
 
-    CKProxy public ck;
+  CKInterface public ck;
 
-    struct Participant {
-        address party;
-        uint256 balance;
-    }
+  struct Participant {
+    address party;
+    uint256 balance;
+  }
 
-    mapping(address => Participant) public participants;
+  mapping(address => Participant) public participants;
 
-    constructor(uint256 betaSaleLength, address _ckProxy) public {
-      betaSaleTime = betaSaleLength;
-      ck = CKProxy(_ckProxy);
-    }
+  modifier onlyBeta() {
+    require(now < betaSaleTime);
+    _;
+  }
 
-    function purchaseQRT() public payable {
+  constructor(uint256 betaSaleLength, address _ckAddress) public {
+    betaSaleTime = betaSaleLength;
+    ck = CKInterface(_ckAddress);
+  }
 
-    }
+  function purchaseQRT() public payable {
+    require(participants[msg.sender].party == address(0x0));
 
-    function portalCryptoKitties() public {
+  }
 
-    }
+  function purchaseQRTbeta() onlyBeta public payable {
 
-    function withdraw() onlyOwner {
+  }
 
-    }
+  function portalCryptoKitties() onlyBeta public {
+
+  }
+
+  function withdraw() onlyOwner {
+
+  }
+
+  function finalize() onlyOwner {
+    // transfer ownership of token from sale contract to msg.sender
+  }
 }
