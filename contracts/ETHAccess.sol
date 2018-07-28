@@ -78,14 +78,12 @@ contract ETHAccess is Ownable, ERC721Token {
     emit QRTPurchase(msg.sender, now, _tokenID);
   }
 
-  function portalCryptoKitties(uint256[10] ids) onlyBeta public {
-    require(ck.balanceOf(msg.sender) >= 10);
+  function portalCryptoKitties(uint256 id) onlyBeta public {
+    require(ck.ownerOf(id) == msg.sender);
     require(totalPortalKitties <= portalKittyLimit);
 
     // this assumes client calls an approval for each cryptokitty id
-    for(uint i=0; i<10; i++) {
-      ck.transferFrom(msg.sender, address(this), ids[i]);
-    }
+    ck.transferFrom(msg.sender, address(this), id);
 
     participants[msg.sender].numPortalKitties = participants[msg.sender].numPortalKitties.add(1);
     totalPortalKitties = totalPortalKitties.add(1);

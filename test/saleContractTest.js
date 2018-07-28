@@ -61,4 +61,8 @@ contract('E.T.H. sale contract tests', function(accounts) {
     await Utils.expectThrow(ea.purchaseQRTbeta({from: partyB, value: web3latest.utils.toWei('0.1')}))
   })
 
+  it("can deposit kitties", async () => {
+    await Utils.expectThrow(ea.purchaseQRTbeta({from: partyB, value: web3latest.utils.toWei('0.2')}))
+  }) 
+
 })
