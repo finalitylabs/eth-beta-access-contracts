@@ -25,6 +25,7 @@ contract ETHAccess is Ownable, ERC721Token {
     uint256 numPortalKitties;
   }
 
+  // we can use this mapping to allow kitty depositers to claim an E.T.H. fighter NFT in the future
   mapping(address => Participant) public participants;
 
   modifier onlyBeta() {
@@ -78,7 +79,7 @@ contract ETHAccess is Ownable, ERC721Token {
     emit QRTPurchase(msg.sender, now, _tokenID);
   }
 
-  function portalCryptoKitties(uint256 id) onlyBeta public {
+  function portalKitty(uint256 id) onlyBeta public {
     require(ck.ownerOf(id) == msg.sender);
     require(totalPortalKitties <= portalKittyLimit);
 

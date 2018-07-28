@@ -27,7 +27,7 @@ contract('E.T.H. sale contract tests', function(accounts) {
     console.log(partyA)
 
     ck = await kittyInterface.at(ckAddress)
-    //ea = await ethAccess.new(betaEndTime, ckAddress, 'E.T.H. Quarter', 'QRTETH')
+    ea = await ethAccess.new(betaEndTime, ckAddress, 'E.T.H. Quarter', 'QRTETH')
   })
 
   // it("set owner of token to sale contract", async () => {
@@ -67,15 +67,27 @@ contract('E.T.H. sale contract tests', function(accounts) {
 
   it("can deposit kitties", async () => {
     let count = await ck.balanceOf(partyA)
-    console.log('kitty count: '+ count)
-
-    let owner = await ck.ownerOf('4')
-    console.log(owner)
+    console.log('testers crypto-kitty count: '+ count)
 
     await ck.createPromoKitty('513061484113755770745526522555723468707689511460688830279873704098216300', partyA)
+    
+    let kittyTotal = await ck.totalSupply()
+    console.log('total: ' + kittyTotal)
 
-    owner = await ck.ownerOf('8')
-    console.log(owner)
+    let owner = await ck.ownerOf(kittyTotal)
+    console.log('owner before portal: ' + owner)
+
+    await ck.approve(ea.address, kittyTotal)
+    await ea.portalKitty(kittyTotal)
+
+    owner = await ck.ownerOf(kittyTotal)
+    console.log('owner after portal: ' + owner)
+
+    let portaled = await ea.totalPortalKitties()
+    console.log('total kitties in portal: ' + portaled)
+
+    let participant = await ea.participants(partyA)
+    console.log('struct storage num kitties: ' + participant[1])
   }) 
 
 })
