@@ -27,7 +27,7 @@ contract('E.T.H. sale contract tests', function(accounts) {
     console.log(partyA)
 
     ck = await kittyInterface.at(ckAddress)
-    //ea = await ethAccess.new(betaEndTime, ckAddress, 'E.T.H. Quarter', 'QRTETH')
+    //ea = await ethAccess.new(betaEndTime, ck.address, 'E.T.H. Quarter', 'QRTETH')
     ea = await ethAccess.at('0x7b19229b7845416b31710ccf39c1408e61fc0e77')
   })
 
