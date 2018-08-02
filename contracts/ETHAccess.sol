@@ -54,6 +54,7 @@ contract ETHAccess is Ownable, ERC721Token {
   {
     betaSaleEnd = betaSaleLength;
     ck = CKInterface(_ckAddress);
+    super._mint(msg.sender, 0);
   }
 
   function purchaseQRT() public payable {
