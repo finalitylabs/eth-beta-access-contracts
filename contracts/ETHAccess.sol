@@ -12,7 +12,6 @@ import "./lib/token/ERC721Token.sol";
 contract ETHAccess is Ownable, ERC721Token {
 
   uint256 public betaQRTLimit = 10; // 10 for testing, 5000 mainnet
-  uint256 public portalKittyLimit = 5; // 5 for testing, 500 mainnet
   uint256 public totalPortalKitties = 0;
   uint256 public QRTprice = 200 finney;
 
@@ -60,9 +59,8 @@ contract ETHAccess is Ownable, ERC721Token {
     emit QRTPurchase(msg.sender, now, _tokenID);
   }
 
-  function portalKitty(uint256 id) onlyBeta public {
+  function portalKitty(uint256 id) public {
     require(ck.ownerOf(id) == msg.sender);
-    require(totalPortalKitties <= portalKittyLimit);
 
     // this assumes client calls an approval for each cryptokitty id
     ck.transferFrom(msg.sender, address(this), id);
