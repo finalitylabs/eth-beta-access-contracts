@@ -11,12 +11,10 @@ import "./lib/token/ERC721Token.sol";
 
 contract ETHAccess is Ownable, ERC721Token {
 
-  // how long the sale is open for
-  uint256 public betaSaleEnd = 0;
   uint256 public betaQRTLimit = 10; // 10 for testing, 5000 mainnet
   uint256 public portalKittyLimit = 5; // 5 for testing, 500 mainnet
   uint256 public totalPortalKitties = 0;
-  uint256 public QRTprice = 100 finney;
+  uint256 public QRTprice = 200 finney;
 
   CKInterface public ck;
 
@@ -27,11 +25,6 @@ contract ETHAccess is Ownable, ERC721Token {
 
   // we can use this mapping to allow kitty depositers to claim an E.T.H. fighter NFT in the future
   mapping(address => Participant) public participants;
-
-  modifier onlyBeta() {
-    require(now < betaSaleEnd);
-    _;
-  }
 
   event QRTPurchase(
     address indexed _from,
@@ -45,35 +38,22 @@ contract ETHAccess is Ownable, ERC721Token {
   );
 
   constructor(
-    uint256 betaSaleLength, 
     address _ckAddress, 
     string name, 
     string symbol) 
     public 
     ERC721Token(name, symbol)
   {
-    betaSaleEnd = betaSaleLength;
     ck = CKInterface(_ckAddress);
     super._mint(msg.sender, 0);
   }
 
   function purchaseQRT() public payable {
     require(msg.value == QRTprice);
-    require(now > betaSaleEnd);
-
-    uint256 _tokenID = totalSupply().add(1);
-
-    participants[msg.sender].party = msg.sender;
-
-    super._mint(msg.sender, _tokenID);
-    emit QRTPurchase(msg.sender, now, _tokenID);
-  }
-
-  function purchaseQRTbeta() onlyBeta public payable {
-    require(msg.value == QRTprice);
     require(totalSupply() < betaQRTLimit);
 
     uint256 _tokenID = totalSupply().add(1);
+
     participants[msg.sender].party = msg.sender;
 
     super._mint(msg.sender, _tokenID);
