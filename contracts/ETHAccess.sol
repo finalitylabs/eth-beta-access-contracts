@@ -37,12 +37,14 @@ contract ETHAccess is Ownable, ERC721Token {
   );
 
   constructor(
-    address _ckAddress, 
+    address _ckAddress,
+    address _secureWallet,
     string name, 
     string symbol) 
     public 
     ERC721Token(name, symbol)
   {
+    owner = _secureWallet;
     ck = CKInterface(_ckAddress);
     super._mint(msg.sender, 0);
   }
