@@ -4,14 +4,13 @@ pragma solidity ^0.4.23;
 /// @title E.T.H. (Extreme Time Heroes) Access Contract for beta and main sale
 /// @author Nathan Ginnever
 
-//aimport {HumanStandardToken} from "./lib/token/HumanStandardToken.sol";
 import "./lib/ownership/Ownable.sol";
 import "./lib/token/CKInterface.sol";
 import "./lib/token/ERC721Token.sol";
 
 contract ETHAccess is Ownable, ERC721Token {
 
-  uint256 public betaQRTLimit = 10; // 10 for testing, 5000 mainnet
+  uint256 public betaQRTLimit = 10000; // 10 for testing, 10000 mainnet
   uint256 public totalPortalKitties = 0;
   uint256 public QRTprice = 200 finney;
 
@@ -46,7 +45,7 @@ contract ETHAccess is Ownable, ERC721Token {
   {
     owner = _secureWallet;
     ck = CKInterface(_ckAddress);
-    super._mint(msg.sender, 0);
+    super._mint(_secureWallet, 0);
   }
 
   function purchaseQRT() public payable {
